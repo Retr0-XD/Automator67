@@ -18,9 +18,21 @@ describe('App Component', () => {
     expect(screen.getByText('Automator67')).toBeInTheDocument();
   });
 
-  it('shows GitHub OAuth button', () => {
+  it('shows mode selection by default', () => {
     render(<App />);
-    const button = screen.getByRole('button', { name: /sign in with github/i });
+    expect(screen.getByText('Local Mode')).toBeInTheDocument();
+    expect(screen.getByText('Cloud Mode')).toBeInTheDocument();
+  });
+
+  it('shows local mode button', () => {
+    render(<App />);
+    const button = screen.getByRole('button', { name: /use local mode/i });
+    expect(button).toBeInTheDocument();
+  });
+
+  it('shows cloud mode button', () => {
+    render(<App />);
+    const button = screen.getByRole('button', { name: /use cloud mode/i });
     expect(button).toBeInTheDocument();
   });
 });
