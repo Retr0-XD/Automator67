@@ -9,17 +9,21 @@
 export interface AuthUser {
   /** Unique identifier for the user */
   id: string;
-  /** User's email address (unique) */
+  /** User's email address (from GitHub) */
   email: string;
-  /** User's full name */
+  /** User's full name (from GitHub) */
   name: string;
-  /** User's profile picture URL (optional) */
+  /** User's profile picture URL (from GitHub) */
   avatar?: string;
+  /** GitHub username */
+  githubUsername: string;
+  /** GitHub profile URL */
+  githubUrl?: string;
   /** Timestamp when user account was created */
   createdAt: Date;
   /** Timestamp of last login */
   lastLogin?: Date;
-  /** Whether email is verified */
+  /** Whether email is verified (always true for GitHub OAuth) */
   emailVerified: boolean;
   /** User roles for access control */
   roles: UserRole[];
@@ -31,23 +35,51 @@ export interface AuthUser {
 export type UserRole = 'admin' | 'moderator' | 'user' | 'guest';
 
 /**
- * Authentication credentials for login
+ * GitHub OAuth callback data
  */
-export interface AuthCredentials {
-  /** User's email address */
-  email: string;
-  /** User's password */
-  password: string;
+export interface GitHubOAuthCallback {
+  /** Authorization code from GitHub */
+  code: string;
+  /** State parameter for CSRF protection */
+  state?: string;
 }
 
 /**
- * Registration data for new users
+ * GitHub OAuth response from backend
  */
-export interface SignupData extends AuthCredentials {
-  /** Full name of the user */
+export interface GitHubOAuthResponse {
+  /** Success status */
+  success: boolean;
+  /** Authenticated user data */
+  user?: AuthUser;
+  /** Access token for API requests */
+  accessToken?: string;
+  /** Refresh token for obtaining new access tokens */
+  refreshToken?: string;
+  /** Error message (if unsuccessful) */
+  error?: string;
+  /** Error code for client-side error handling */
+  errorCode?: AuthErrorCode;
+}
+
+/**
+ * Registration data for new users (DEPRECATED - OAuth only)
+ * @deprecated Use GitHub OAuth instead
+ */
+export interface SignupData {
+  email: string;
+  password: string;
   name: string;
-  /** Confirmation of password */
   confirmPassword: string;
+}
+
+/**
+ * Authentication credentials for login (DEPRECATED - OAuth only)
+ * @deprecated Use GitHub OAuth instead
+ */
+export interface AuthCredentials {
+  email: string;
+  password: string;
 }
 
 /**
@@ -72,6 +104,10 @@ export interface AuthResponse {
  * Authentication error codes
  */
 export type AuthErrorCode =
+  | 'OAUTH_FAILED'
+  | 'OAUTH_CANCELLED'
+  | 'OAUTH_STATE_MISMATCH'
+  | 'GITHUB_API_ERROR'
   | 'INVALID_CREDENTIALS'
   | 'USER_NOT_FOUND'
   | 'EMAIL_ALREADY_EXISTS'

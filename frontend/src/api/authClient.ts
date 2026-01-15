@@ -4,6 +4,8 @@ import type {
   AuthResponse,
   AuthUser,
   AuthErrorCode,
+  GitHubOAuthCallback,
+  GitHubOAuthResponse,
 } from '../auth/types';
 
 /**
@@ -11,11 +13,14 @@ import type {
  */
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 const AUTH_ENDPOINTS = {
-  login: '/auth/login',
-  signup: '/auth/signup',
+  githubCallback: '/auth/github/callback',
+  githubUrl: '/auth/github/url',
   logout: '/auth/logout',
   refresh: '/auth/refresh',
   profile: '/auth/profile',
+  // Deprecated - OAuth only
+  login: '/auth/login',
+  signup: '/auth/signup',
 };
 
 /**
@@ -102,7 +107,32 @@ export class AuthApiClient {
   }
 
   /**
+   * Get GitHub OAuth authorization URL
+   *
+   * @returns GitHub OAuth URL with client ID and redirect URI
+   */
+  async getGitHubOAuthUrl(): Promise<{ url: string; state: string }> {
+    return this.request<{ url: string; state: string }>(AUTH_ENDPOINTS.githubUrl, {
+      method: 'GET',
+    });
+  }
+
+  /**
+   * Complete GitHub OAuth flow
+   *
+   * @param callback - OAuth callback data (code and state)
+   * @returns Authentication response with user and tokens
+   */
+  async githubCallback(callback: GitHubOAuthCallback): Promise<GitHubOAuthResponse> {
+    return this.request<GitHubOAuthResponse>(AUTH_ENDPOINTS.githubCallback, {
+      method: 'POST',
+      body: JSON.stringify(callback),
+    });
+  }
+
+  /**
    * Login with email and password
+    * @deprecated Use GitHub OAuth instead
    *
    * @param credentials - User login credentials
    * @returns Authentication response with user and tokens
@@ -116,6 +146,7 @@ export class AuthApiClient {
 
   /**
    * Register a new user
+    * @deprecated Use GitHub OAuth instead
    *
    * @param data - User signup data
    * @returns Authentication response with user and tokens

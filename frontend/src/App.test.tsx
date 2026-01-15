@@ -3,9 +3,14 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 
 describe('App Component', () => {
+  beforeEach(() => {
+    // Ensure we render the main login view (not the OAuth callback)
+    window.history.pushState({}, '', '/');
+  });
+
   it('renders without crashing', () => {
     render(<App />);
-    expect(screen.getByRole('heading')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
   });
 
   it('displays the app title', () => {
@@ -13,20 +18,9 @@ describe('App Component', () => {
     expect(screen.getByText('Automator67')).toBeInTheDocument();
   });
 
-  it('displays the tagline', () => {
+  it('shows GitHub OAuth button', () => {
     render(<App />);
-    expect(screen.getByText('Democratizing Cloud Computing')).toBeInTheDocument();
-  });
-
-  it('displays Sign In tab by default', () => {
-    render(<App />);
-    const signInButtons = screen.getAllByRole('button', { name: /sign in/i });
-    expect(signInButtons.length).toBeGreaterThan(0);
-  });
-
-  it('displays the login form by default', () => {
-    render(<App />);
-    expect(screen.getByPlaceholderText('you@example.com')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('••••••••')).toBeInTheDocument();
+    const button = screen.getByRole('button', { name: /sign in with github/i });
+    expect(button).toBeInTheDocument();
   });
 });
