@@ -1,4 +1,4 @@
-# FreeCloud Orchestrator 🚀
+# Automator67 🚀
 ### Democratizing Cloud Computing Through Free-Tier Aggregation
 
 > **Educational Project**: A distributed computing platform that aggregates free-tier cloud services into a unified, scalable infrastructure accessible to everyone.
@@ -7,7 +7,7 @@
 
 ## 🎯 Project Vision
 
-FreeCloud Orchestrator enables anyone to harness the power of multiple free-tier cloud services (Render, Supabase, MongoDB, Firebase, etc.) and combine them into a cohesive, scalable computing cluster. By deploying lightweight wrappers across these services and implementing intelligent orchestration, users can:
+Automator67 enables anyone to harness the power of multiple free-tier cloud services (Render, Supabase, MongoDB, Firebase, etc.) and combine them into a cohesive, scalable computing cluster. By deploying lightweight wrappers across these services and implementing intelligent orchestration, users can:
 
 - **Scale beyond free-tier limits** through distributed load balancing
 - **Deploy applications** without infrastructure costs
@@ -1672,7 +1672,7 @@ CMD ["node-wrapper"]
 
 ---
 
-**Final Notes**: This comprehensive guide provides the foundation for FreeCloud Orchestrator. Start with Phase 1, gradually add features, focus on reliability and security, and always respect provider terms of service and free-tier limits.
+**Final Notes**: This comprehensive guide provides the foundation for Automator67. Start with Phase 1, gradually add features, focus on reliability and security, and always respect provider terms of service and free-tier limits.
 
 Happy building! 🚀
 

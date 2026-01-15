@@ -8,7 +8,9 @@ describe('cn utility', () => {
   });
 
   it('handles conditional classes', () => {
-    const result = cn('px-2', false && 'py-1', true && 'font-bold');
+    const isBold = true;
+    const isSmall = false;
+    const result = cn('px-2', isSmall && 'py-1', isBold && 'font-bold');
     expect(result).toContain('px-2');
     expect(result).toContain('font-bold');
     expect(result).not.toContain('py-1');
