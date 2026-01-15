@@ -60,12 +60,16 @@ Automator67 enables anyone to harness the power of multiple free-tier cloud serv
 ### Component Breakdown
 
 #### 1. **Frontend Dashboard** (React + TypeScript)
-- OAuth token management interface
+- **Dual Mode Operation**:
+  - **Local Mode**: Runs completely offline, no authentication required, data stored in browser
+  - **Cloud Mode**: Optional sync with user's self-hosted backend via GitHub OAuth
 - Real-time node status monitoring
 - Deployment configuration UI
 - Credential encryption key management
 - Resource utilization graphs
 - Application deployment wizard
+
+**Important**: All infrastructure is user-owned. No centralized services from Automator67.
 
 #### 2. **Controller/Orchestrator** (Node.js/Go)
 The brain of the system with multiple responsibilities:
