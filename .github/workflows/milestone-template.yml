@@ -1,0 +1,49 @@
+name: 'Milestone Testing Template'
+# This is a template for future milestone workflows
+# Copy this and modify for each new milestone (M1.2, M1.3, etc.)
+
+on:
+  workflow_dispatch:
+    inputs:
+      milestone:
+        description: 'Milestone to test (e.g., 1.2, 1.3)'
+        required: true
+
+jobs:
+  template-info:
+    name: Template Info
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display template usage
+        run: |
+          echo "## Milestone Testing Template"
+          echo ""
+          echo "This workflow is a template for testing individual milestones."
+          echo ""
+          echo "### To use this template:"
+          echo "1. Duplicate this file: .github/workflows/test-milestone-X.yml"
+          echo "2. Update the trigger (on.push.paths) to include the relevant paths"
+          echo "3. Add stage-specific jobs similar to test-milestone-1.yml"
+          echo ""
+          echo "### Standard Testing Stages (in order):"
+          echo "1. **Lint & Code Quality** - ESLint, Prettier, code style"
+          echo "2. **Type Checking** - TypeScript strict mode"
+          echo "3. **Unit Tests** - Vitest/Jest for component and utility tests"
+          echo "4. **Integration Tests** - Test interactions between components"
+          echo "5. **Build** - Create production bundle"
+          echo "6. **E2E Tests** - Full user flow testing (Cypress/Playwright)"
+          echo "7. **Performance** - Bundle size, metrics, screenshots"
+          echo "8. **Accessibility** - a11y validation"
+          echo "9. **Security** - Dependency scanning, secret detection"
+          echo "10. **Summary** - Aggregate all results"
+          echo ""
+          echo "### Example structure for M1.2 (Authentication):"
+          echo "```yaml"
+          echo "jobs:"
+          echo "  lint: # ESLint, Prettier"
+          echo "  typecheck: # TypeScript"
+          echo "  unit-tests: # Auth forms, utilities"
+          echo "  integration-tests: # Auth flow with mocked API"
+          echo "  build: # Ensure build succeeds"
+          echo "  summary: # Report all results"
+          echo "```"
