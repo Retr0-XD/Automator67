@@ -79,9 +79,12 @@ export type AuthErrorCode =
   | 'INVALID_EMAIL'
   | 'TOKEN_EXPIRED'
   | 'INVALID_TOKEN'
+  | 'INVALID_ACCESS_TOKEN'
+  | 'INVALID_REFRESH_TOKEN'
   | 'UNAUTHORIZED'
   | 'SERVER_ERROR'
-  | 'NETWORK_ERROR';
+  | 'NETWORK_ERROR'
+  | 'UNKNOWN_ERROR';
 
 /**
  * Authentication state in the store
