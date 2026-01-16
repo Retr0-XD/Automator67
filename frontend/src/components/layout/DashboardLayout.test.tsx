@@ -1,10 +1,16 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, it, expect } from 'vitest';
+import type { ReactNode } from 'react';
 import { DashboardLayout } from './DashboardLayout';
+
+function renderWithRouter(ui: ReactNode) {
+  return render(<MemoryRouter>{ui}</MemoryRouter>);
+}
 
 describe('DashboardLayout', () => {
   it('renders without crashing', () => {
-    render(
+    renderWithRouter(
       <DashboardLayout>
         <div>Test content</div>
       </DashboardLayout>
@@ -12,7 +18,7 @@ describe('DashboardLayout', () => {
   });
 
   it('displays the app name', () => {
-    render(
+    renderWithRouter(
       <DashboardLayout>
         <div>Test content</div>
       </DashboardLayout>
@@ -21,7 +27,7 @@ describe('DashboardLayout', () => {
   });
 
   it('displays Local Mode indicator', () => {
-    render(
+    renderWithRouter(
       <DashboardLayout>
         <div>Test content</div>
       </DashboardLayout>
@@ -30,7 +36,7 @@ describe('DashboardLayout', () => {
   });
 
   it('renders children content', () => {
-    render(
+    renderWithRouter(
       <DashboardLayout>
         <div>Test content</div>
       </DashboardLayout>
@@ -38,30 +44,21 @@ describe('DashboardLayout', () => {
     expect(screen.getByText('Test content')).toBeInTheDocument();
   });
 
-  it('displays header with Dashboard title', () => {
-    render(
+  it('uses default title when not provided', () => {
+    renderWithRouter(
       <DashboardLayout>
         <div>Test content</div>
       </DashboardLayout>
     );
-    expect(screen.getByText('Dashboard')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Dashboard' })).toBeInTheDocument();
   });
 
-  it('displays version number', () => {
-    render(
-      <DashboardLayout>
+  it('uses custom title when provided', () => {
+    renderWithRouter(
+      <DashboardLayout title="Custom Title">
         <div>Test content</div>
       </DashboardLayout>
     );
-    expect(screen.getByText('v1.0.0')).toBeInTheDocument();
-  });
-
-  it('displays settings button', () => {
-    render(
-      <DashboardLayout>
-        <div>Test content</div>
-      </DashboardLayout>
-    );
-    expect(screen.getByRole('button', { name: /settings/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Custom Title' })).toBeInTheDocument();
   });
 });

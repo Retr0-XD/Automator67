@@ -1,9 +1,6 @@
-import { DashboardLayout } from '../components/layout/DashboardLayout';
-
 export function NodesPage() {
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Nodes</h1>
           <p className="text-gray-600 mt-2">Manage your worker nodes across cloud providers</p>
@@ -32,6 +29,5 @@ export function NodesPage() {
           </button>
         </div>
       </div>
-    </DashboardLayout>
-  );
+    );
 }

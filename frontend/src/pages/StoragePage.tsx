@@ -1,9 +1,6 @@
-import { DashboardLayout } from '../components/layout/DashboardLayout';
-
 export function StoragePage() {
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Storage</h1>
           <p className="text-gray-600 mt-2">Manage distributed file storage</p>
@@ -29,6 +26,5 @@ export function StoragePage() {
           </p>
         </div>
       </div>
-    </DashboardLayout>
-  );
+    );
 }

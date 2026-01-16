@@ -1,11 +1,5 @@
-import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../../lib/utils';
-
-export interface DashboardLayoutProps {
-  children: ReactNode;
-  title?: string;
-}
 
 interface NavItem {
   label: string;
@@ -70,7 +64,7 @@ const navItems: NavItem[] = [
   },
 ];
 
-function Sidebar() {
+export function Sidebar() {
   const location = useLocation();
 
   return (
@@ -116,39 +110,5 @@ function Sidebar() {
         </div>
       </div>
     </aside>
-  );
-}
-
-/**
- * Main dashboard layout with sidebar and header
- * Used for all authenticated pages in local or cloud mode
- */
-export function DashboardLayout({ children, title = 'Dashboard' }: DashboardLayoutProps) {
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="flex h-screen overflow-hidden">
-        <Sidebar />
-
-        {/* Main content */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Header */}
-          <header className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
-              <div className="flex items-center gap-4">
-                <button className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
-                  Settings
-                </button>
-              </div>
-            </div>
-          </header>
-
-          {/* Page content */}
-          <main className="flex-1 overflow-y-auto p-6">
-            {children}
-          </main>
-        </div>
-      </div>
-    </div>
   );
 }

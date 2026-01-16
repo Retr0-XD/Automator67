@@ -1,9 +1,6 @@
-import { DashboardLayout } from '../components/layout/DashboardLayout';
-
 export function DashboardPage() {
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-600 mt-2">Welcome to Automator67</p>
@@ -47,6 +44,5 @@ export function DashboardPage() {
           </button>
         </div>
       </div>
-    </DashboardLayout>
-  );
+    );
 }
