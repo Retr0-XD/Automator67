@@ -54,18 +54,18 @@ type NodeCapabilities struct {
 
 // Node represents a registered node in the system
 type Node struct {
-	ID               string            `json:"id"`
-	UserID           string            `json:"userId"`
-	Provider         CloudProvider     `json:"provider"`
-	Endpoint         string            `json:"endpoint"`
-	Region           string            `json:"region"`
-	Status           NodeStatus        `json:"status"`
-	Health           NodeHealth        `json:"health"`
-	Capabilities     NodeCapabilities  `json:"capabilities"`
-	Credentials      NodeCredentials   `json:"credentials"`
-	CreatedAt        int64             `json:"createdAt"`
-	LastHeartbeat    int64             `json:"lastHeartbeat"`
-	LastMetricsUpdate int64            `json:"lastMetricsUpdate"`
+	ID                string            `json:"id"`
+	UserID            string            `json:"userId"`
+	Provider          CloudProvider     `json:"provider"`
+	Endpoint          string            `json:"endpoint"`
+	Region            string            `json:"region"`
+	Status            NodeStatus        `json:"status"`
+	Health            NodeHealth        `json:"health"`
+	Capabilities      NodeCapabilities  `json:"capabilities"`
+	Credentials       NodeCredentials   `json:"credentials"`
+	CreatedAt         time.Time         `json:"createdAt"`
+	LastHeartbeat     time.Time         `json:"lastHeartbeat"`
+	LastMetricsUpdate time.Time         `json:"lastMetricsUpdate"`
 }
 
 // NodeCredentials holds encrypted credentials for a node

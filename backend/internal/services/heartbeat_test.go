@@ -179,7 +179,7 @@ func TestHeartbeatServicePeriodicUpdates(t *testing.T) {
 	secondHeartbeat := node2.LastHeartbeat
 
 	// Second heartbeat should be after first
-	if secondHeartbeat <= firstHeartbeat {
+	if !secondHeartbeat.After(firstHeartbeat) {
 		t.Error("Expected heartbeat timestamp to be updated")
 	}
 }

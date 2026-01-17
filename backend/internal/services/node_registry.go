@@ -219,7 +219,7 @@ func (nr *NodeRegistry) GetNodesByStatus(userID string, status types.NodeStatus)
 // UpdateNodeStatus updates a node's status
 func (nr *NodeRegistry) UpdateNodeStatus(nodeID string, status types.NodeStatus) (*types.Node, error) {
 	query := `UPDATE nodes SET status = $1, last_heartbeat = $2 WHERE id = $3`
-	now := time.Now().Unix() * 1000
+	now := time.Now()
 
 	_, err := nr.dbConn.Exec(query, string(status), now, nodeID)
 	if err != nil {
@@ -235,7 +235,7 @@ func (nr *NodeRegistry) UpdateNodeStatus(nodeID string, status types.NodeStatus)
 func (nr *NodeRegistry) UpdateNodeHealth(nodeID string, health types.NodeHealth) (*types.Node, error) {
 	healthJSON, _ := json.Marshal(health)
 	query := `UPDATE nodes SET health = $1, last_metrics_update = $2 WHERE id = $3`
-	now := time.Now().Unix() * 1000
+	now := time.Now()
 
 	_, err := nr.dbConn.Exec(query, healthJSON, now, nodeID)
 	if err != nil {
