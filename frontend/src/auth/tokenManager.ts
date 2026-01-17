@@ -116,17 +116,9 @@ export class TokenRefreshManager {
    * Perform the actual token refresh
    */
   private static async performRefresh(): Promise<boolean> {
-    const refreshToken = TokenStorage.getRefreshToken();
-
-    if (!refreshToken) {
-      console.error('No refresh token available');
-      this.handleRefreshFailure();
-      return false;
-    }
-
     try {
       // Call refresh endpoint
-      const response = await authApi.refreshTokens(refreshToken);
+      const response = await authApi.refreshTokens();
 
       // Update tokens in storage
       TokenStorage.saveAccessToken(response.accessToken);

@@ -4,23 +4,18 @@ import type {
   AuthResponse,
   AuthUser,
   AuthErrorCode,
-  GitHubOAuthCallback,
-  GitHubOAuthResponse,
 } from '../auth/types';
 
 /**
  * API Configuration
  */
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api/v1';
 const AUTH_ENDPOINTS = {
-  githubCallback: '/auth/github/callback',
-  githubUrl: '/auth/github/url',
-  logout: '/auth/logout',
-  refresh: '/auth/refresh',
-  profile: '/auth/profile',
-  // Deprecated - OAuth only
   login: '/auth/login',
   signup: '/auth/signup',
+  profile: '/me',
+  refresh: '/auth/refresh', // placeholder; backend not implemented
+  logout: '/auth/logout', // placeholder; backend not implemented
 };
 
 /**
@@ -107,89 +102,62 @@ export class AuthApiClient {
   }
 
   /**
-   * Get GitHub OAuth authorization URL
-   *
-   * @returns GitHub OAuth URL with client ID and redirect URI
-   */
-  async getGitHubOAuthUrl(): Promise<{ url: string; state: string }> {
-    return this.request<{ url: string; state: string }>(AUTH_ENDPOINTS.githubUrl, {
-      method: 'GET',
-    });
-  }
-
-  /**
-   * Complete GitHub OAuth flow
-   *
-   * @param callback - OAuth callback data (code and state)
-   * @returns Authentication response with user and tokens
-   */
-  async githubCallback(callback: GitHubOAuthCallback): Promise<GitHubOAuthResponse> {
-    return this.request<GitHubOAuthResponse>(AUTH_ENDPOINTS.githubCallback, {
-      method: 'POST',
-      body: JSON.stringify(callback),
-    });
-  }
-
-  /**
    * Login with email and password
-    * @deprecated Use GitHub OAuth instead
    *
    * @param credentials - User login credentials
    * @returns Authentication response with user and tokens
    */
   async login(credentials: AuthCredentials): Promise<AuthResponse> {
-    return this.request<AuthResponse>(AUTH_ENDPOINTS.login, {
+    const raw = await this.request<{ user: AuthUser; token: string }>(AUTH_ENDPOINTS.login, {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
+
+    return {
+      success: true,
+      user: raw.user,
+      accessToken: raw.token,
+      refreshToken: raw.token, // backend does not issue refresh tokens; reuse access token
+      token: raw.token,
+    };
   }
 
   /**
    * Register a new user
-    * @deprecated Use GitHub OAuth instead
    *
    * @param data - User signup data
    * @returns Authentication response with user and tokens
    */
   async signup(data: SignupData): Promise<AuthResponse> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirmPassword, ...signupData } = data;
-    return this.request<AuthResponse>(AUTH_ENDPOINTS.signup, {
+    const raw = await this.request<{ user: AuthUser; token: string }>(AUTH_ENDPOINTS.signup, {
       method: 'POST',
       body: JSON.stringify(signupData),
     });
+
+    return {
+      success: true,
+      user: raw.user,
+      accessToken: raw.token,
+      refreshToken: raw.token,
+      token: raw.token,
+    };
   }
 
   /**
    * Logout current user
-   *
-   * @param accessToken - Current access token
    */
-  async logout(accessToken: string): Promise<void> {
-    await this.request<void>(AUTH_ENDPOINTS.logout, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  async logout(): Promise<void> {
+    // Backend does not support logout yet; clear client state upstream
+    return Promise.resolve();
   }
 
   /**
    * Refresh authentication tokens
-   *
-   * @param refreshToken - Current refresh token
-   * @returns New access and refresh tokens
+   * Not supported by backend yet
    */
-  async refreshTokens(
-    refreshToken: string,
-  ): Promise<{ accessToken: string; refreshToken: string }> {
-    return this.request<{ accessToken: string; refreshToken: string }>(
-      AUTH_ENDPOINTS.refresh,
-      {
-        method: 'POST',
-        body: JSON.stringify({ refreshToken }),
-      },
-    );
+  async refreshTokens(): Promise<{ accessToken: string; refreshToken: string }> {
+    throw new ApiError(400, 'INVALID_REFRESH_TOKEN', 'Refresh tokens are not supported yet');
   }
 
   /**

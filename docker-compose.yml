@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: automator67-db
+    environment:
+      POSTGRES_USER: automator
+      POSTGRES_PASSWORD: devpassword123
+      POSTGRES_DB: automator67
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=en_US.UTF-8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    networks:
+      - automator-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U automator -d automator67"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+networks:
+  automator-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

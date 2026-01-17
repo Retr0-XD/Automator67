@@ -7,26 +7,18 @@
  * Represents an authenticated user
  */
 export interface AuthUser {
-  /** Unique identifier for the user */
   id: string;
-  /** User's email address (from GitHub) */
   email: string;
-  /** User's full name (from GitHub) */
-  name: string;
-  /** User's profile picture URL (from GitHub) */
+  name?: string;
   avatar?: string;
-  /** GitHub username */
-  githubUsername: string;
-  /** GitHub profile URL */
+  githubUsername?: string;
   githubUrl?: string;
-  /** Timestamp when user account was created */
-  createdAt: Date;
-  /** Timestamp of last login */
-  lastLogin?: Date;
-  /** Whether email is verified (always true for GitHub OAuth) */
-  emailVerified: boolean;
-  /** User roles for access control */
-  roles: UserRole[];
+  createdAt: number | Date;
+  updatedAt?: number | Date;
+  emailVerified?: boolean;
+  roles?: UserRole[];
+  mfaEnabled?: boolean;
+  active?: boolean;
 }
 
 /**
@@ -63,19 +55,17 @@ export interface GitHubOAuthResponse {
 }
 
 /**
- * Registration data for new users (DEPRECATED - OAuth only)
- * @deprecated Use GitHub OAuth instead
+ * Registration data for new users
  */
 export interface SignupData {
   email: string;
   password: string;
-  name: string;
-  confirmPassword: string;
+  name?: string;
+  confirmPassword?: string;
 }
 
 /**
- * Authentication credentials for login (DEPRECATED - OAuth only)
- * @deprecated Use GitHub OAuth instead
+ * Authentication credentials for login
  */
 export interface AuthCredentials {
   email: string;
@@ -86,17 +76,12 @@ export interface AuthCredentials {
  * Response from authentication endpoints
  */
 export interface AuthResponse {
-  /** Success status of the authentication request */
   success: boolean;
-  /** Authenticated user data (if successful) */
   user?: AuthUser;
-  /** Access token for API requests */
   accessToken?: string;
-  /** Refresh token for obtaining new access tokens */
   refreshToken?: string;
-  /** Error message (if unsuccessful) */
+  token?: string;
   error?: string;
-  /** Error code for client-side error handling */
   errorCode?: AuthErrorCode;
 }
 

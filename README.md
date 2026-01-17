@@ -1523,6 +1523,46 @@ GET    /api/v1/storage/list            List files in bucket
 
 ---
 
+## 🚄 Backend Implementation
+
+The Controller/Orchestrator service has been implemented in **Go** for optimal performance:
+
+### Why Go?
+
+- ✅ **12MB single binary** (vs 114MB for Node.js)
+- ✅ **<100ms startup time**
+- ✅ **Excellent concurrency** (goroutines for health checks)
+- ✅ **Low memory footprint** (~50-100MB at runtime)
+- ✅ **Native compilation** for all platforms
+- ✅ **Built-in HTTP support** (Gin framework)
+
+### Backend Stack
+
+```
+Controller (Go)
+├── HTTP Framework: Gin Gonic
+├── Database: PostgreSQL (upcoming)
+├── Service Layer:
+│   ├── NodeRegistry - Node registration & management
+│   ├── HealthMonitor - Periodic health checks
+│   └── DeploymentManager - Deployment lifecycle
+└── Runtime: Go 1.21+
+```
+
+### Quick Start
+
+```bash
+cd backend-go
+make build          # Build binary
+make run            # Run server
+make dev            # Development mode
+./bin/controller    # Direct run
+```
+
+See [backend-go/README.md](backend-go/README.md) for detailed documentation.
+
+---
+
 ### Performance Targets
 
 - **Node Registration**: < 5 seconds
