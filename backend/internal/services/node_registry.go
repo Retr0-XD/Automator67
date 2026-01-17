@@ -33,7 +33,7 @@ func (nr *NodeRegistry) RegisterNode(
 	credentials types.NodeCredentials,
 ) (*types.Node, error) {
 	nodeID := uuid.New().String()
-	now := time.Now().Unix() * 1000 // milliseconds
+	now := time.Now() // Use time.Time for PostgreSQL TIMESTAMP
 
 	capJSON, _ := json.Marshal(capabilities)
 	credJSON, _ := json.Marshal(credentials)
@@ -42,7 +42,7 @@ func (nr *NodeRegistry) RegisterNode(
 		MemoryPercent: 0,
 		DiskPercent:   0,
 		Uptime:        0,
-		LastHeartbeat: now,
+		LastHeartbeat: now.Unix(), // Store as seconds in JSON
 	})
 
 	query := `
