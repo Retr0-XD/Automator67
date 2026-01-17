@@ -27,11 +27,11 @@ The Frontend Dashboard is the **single point of user interaction** with the Auto
 ## 2. Responsibilities & Boundaries
 
 ### ✅ Dashboard IS Responsible For:
-1. **User Authentication**
-   - Account registration and login
-   - Password management
-   - Master password for credential encryption
+1. **User Authentication** (Optional - Cloud Mode Only)
+   - Mode selection: Local vs Cloud
+   - GitHub OAuth integration (user's own OAuth app)
    - Session management (JWT token storage)
+   - Note: Local mode requires no authentication
 
 2. **Credential Management**
    - Display encrypted OAuth token input forms

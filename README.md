@@ -60,12 +60,16 @@ Automator67 enables anyone to harness the power of multiple free-tier cloud serv
 ### Component Breakdown
 
 #### 1. **Frontend Dashboard** (React + TypeScript)
-- OAuth token management interface
+- **Dual Mode Operation**:
+  - **Local Mode**: Runs completely offline, no authentication required, data stored in browser
+  - **Cloud Mode**: Optional sync with user's self-hosted backend via GitHub OAuth
 - Real-time node status monitoring
 - Deployment configuration UI
 - Credential encryption key management
 - Resource utilization graphs
 - Application deployment wizard
+
+**Important**: All infrastructure is user-owned. No centralized services from Automator67.
 
 #### 2. **Controller/Orchestrator** (Node.js/Go)
 The brain of the system with multiple responsibilities:
@@ -1516,6 +1520,46 @@ GET    /api/v1/storage/:fileId         Download file
 DELETE /api/v1/storage/:fileId         Delete file
 GET    /api/v1/storage/list            List files in bucket
 ```
+
+---
+
+## 🚄 Backend Implementation
+
+The Controller/Orchestrator service has been implemented in **Go** for optimal performance:
+
+### Why Go?
+
+- ✅ **12MB single binary** (vs 114MB for Node.js)
+- ✅ **<100ms startup time**
+- ✅ **Excellent concurrency** (goroutines for health checks)
+- ✅ **Low memory footprint** (~50-100MB at runtime)
+- ✅ **Native compilation** for all platforms
+- ✅ **Built-in HTTP support** (Gin framework)
+
+### Backend Stack
+
+```
+Controller (Go)
+├── HTTP Framework: Gin Gonic
+├── Database: PostgreSQL (upcoming)
+├── Service Layer:
+│   ├── NodeRegistry - Node registration & management
+│   ├── HealthMonitor - Periodic health checks
+│   └── DeploymentManager - Deployment lifecycle
+└── Runtime: Go 1.21+
+```
+
+### Quick Start
+
+```bash
+cd backend-go
+make build          # Build binary
+make run            # Run server
+make dev            # Development mode
+./bin/controller    # Direct run
+```
+
+See [backend-go/README.md](backend-go/README.md) for detailed documentation.
 
 ---
 

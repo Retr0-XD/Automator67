@@ -7,6 +7,17 @@
 ### Vision
 Enable anyone to deploy, scale, and manage applications across multiple free-tier cloud providers without hitting computational limits or paying expensive cloud bills.
 
+### Deployment Model
+**User-Owned Infrastructure**: Automator67 is a self-hosted tool. You own and control everything:
+- Frontend runs locally or on your hosting (Vercel, Netlify, etc.)
+- Optional backend for sync is deployed by you (not us)
+- All credentials and data stay with you
+- No centralized services or databases maintained by Automator67
+
+### Operating Modes
+- **Local Mode**: Complete offline operation, zero setup, data in browser localStorage
+- **Cloud Mode**: Optional sync across devices using your own backend + GitHub OAuth app
+
 ### Target Use Cases
 - **Developers**: Host full-stack applications without costs
 - **Startups**: Scale applications as they grow, starting free
