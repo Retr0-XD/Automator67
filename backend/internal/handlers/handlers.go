@@ -41,7 +41,7 @@ var startTime = time.Now()
 func GetNodes(c *gin.Context) {
 	userID := c.GetString("userId")
 	if userID == "" {
-		userID = "test-user" // For development
+		userID = "00000000-0000-0000-0000-000000000001" // For development
 	}
 
 	nodes, err := nodeReg.GetUserNodes(userID)
@@ -62,7 +62,7 @@ func GetNodes(c *gin.Context) {
 func CreateNode(c *gin.Context) {
 	userID := c.GetString("userId")
 	if userID == "" {
-		userID = "test-user" // For development
+		userID = "00000000-0000-0000-0000-000000000001" // For development
 	}
 
 	var req struct {
@@ -103,7 +103,7 @@ func CreateNode(c *gin.Context) {
 func GetNode(c *gin.Context) {
 	userID := c.GetString("userId")
 	if userID == "" {
-		userID = "test-user"
+		userID = "00000000-0000-0000-0000-000000000001"
 	}
 
 	nodeID := c.Param("nodeId")
@@ -135,7 +135,7 @@ func GetNode(c *gin.Context) {
 func DeleteNode(c *gin.Context) {
 	userID := c.GetString("userId")
 	if userID == "" {
-		userID = "test-user"
+		userID = "00000000-0000-0000-0000-000000000001"
 	}
 
 	nodeID := c.Param("nodeId")
@@ -174,7 +174,7 @@ func DeleteNode(c *gin.Context) {
 func GetNodeStats(c *gin.Context) {
 	userID := c.GetString("userId")
 	if userID == "" {
-		userID = "test-user"
+		userID = "00000000-0000-0000-0000-000000000001"
 	}
 
 	stats, err := nodeReg.GetNodeStats(userID)
@@ -195,7 +195,7 @@ func GetNodeStats(c *gin.Context) {
 func GetDeployments(c *gin.Context) {
 	userID := c.GetString("userId")
 	if userID == "" {
-		userID = "test-user"
+		userID = "00000000-0000-0000-0000-000000000001"
 	}
 
 	deployments, err := depMgr.GetUserDeployments(userID)
@@ -216,7 +216,7 @@ func GetDeployments(c *gin.Context) {
 func CreateDeployment(c *gin.Context) {
 	userID := c.GetString("userId")
 	if userID == "" {
-		userID = "test-user"
+		userID = "00000000-0000-0000-0000-000000000001"
 	}
 
 	var req struct {
@@ -269,7 +269,7 @@ func CreateDeployment(c *gin.Context) {
 func GetDeployment(c *gin.Context) {
 	userID := c.GetString("userId")
 	if userID == "" {
-		userID = "test-user"
+		userID = "00000000-0000-0000-0000-000000000001"
 	}
 
 	deploymentID := c.Param("deploymentId")
@@ -301,7 +301,7 @@ func GetDeployment(c *gin.Context) {
 func DeleteDeployment(c *gin.Context) {
 	userID := c.GetString("userId")
 	if userID == "" {
-		userID = "test-user"
+		userID = "00000000-0000-0000-0000-000000000001"
 	}
 
 	deploymentID := c.Param("deploymentId")
@@ -340,7 +340,7 @@ func DeleteDeployment(c *gin.Context) {
 func GetDeploymentStats(c *gin.Context) {
 	userID := c.GetString("userId")
 	if userID == "" {
-		userID = "test-user"
+		userID = "00000000-0000-0000-0000-000000000001"
 	}
 
 	stats, err := depMgr.GetDeploymentStats(userID)
@@ -692,8 +692,8 @@ func AuthMiddleware(c *gin.Context) {
 	// Get token from Authorization header
 	authHeader := c.GetHeader("Authorization")
 	if authHeader == "" {
-		// For development, allow requests without auth token
-		c.Set("userId", "test-user")
+		// For development, allow requests without auth token with a valid test UUID
+		c.Set("userId", "00000000-0000-0000-0000-000000000001") // Valid UUID for testing
 		c.Next()
 		return
 	}

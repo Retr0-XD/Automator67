@@ -17,8 +17,8 @@ func setupTestDB(t *testing.T) {
 	cfg := db.Config{
 		Host:     dbHost,
 		Port:     5432,
-		User:     "postgres",
-		Password: "password",
+		User:     "automator",
+		Password: "devpassword123",
 		Database: "automator67_test",
 		SSLMode:  "disable",
 	}
@@ -219,7 +219,8 @@ func TestGetUserNotFound(t *testing.T) {
 
 	authSvc := NewAuthService("test-secret")
 
-	user, err := authSvc.GetUser("nonexistent-id")
+	// Use a valid UUID format that doesn't exist in database
+	user, err := authSvc.GetUser("00000000-0000-0000-0000-000000000000")
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)
 	}

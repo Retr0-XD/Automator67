@@ -24,8 +24,8 @@ func setupTestDB(t *testing.T) {
 	cfg := db.Config{
 		Host:     dbHost,
 		Port:     5432,
-		User:     "postgres",
-		Password: "password",
+		User:     "automator",
+		Password: "devpassword123",
 		Database: "automator67_test",
 		SSLMode:  "disable",
 	}
@@ -319,9 +319,9 @@ func TestMeHandlerNoAuth(t *testing.T) {
 
 	router.ServeHTTP(w, req)
 
-	// Should fall back to test-user in development
-	if w.Code != http.StatusOK && w.Code != http.StatusUnauthorized {
-		t.Errorf("Expected status %d or %d, got %d", http.StatusOK, http.StatusUnauthorized, w.Code)
+	// In development mode, should allow with test UUID - expect 200 or 404
+	if w.Code != http.StatusOK && w.Code != http.StatusNotFound {
+		t.Errorf("Expected status %d or %d, got %d", http.StatusOK, http.StatusNotFound, w.Code)
 	}
 }
 
